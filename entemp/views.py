@@ -17,21 +17,27 @@ def entemp_view(request):
     # under the hood. 
     #TODO: Update below to just use lxml and pass that to pandas.
     dfs = pd.read_html(io=html.text, match='2021\s+')
-    # Current read_html setup is creating duplicate dataframes for each month
-    # Hence the isnan check.
-    good_frames = [frame for frame in dfs if not math.isnan(frame.iat[0,1])] 
-    full_frame = pd.concat(good_frames, ignore_index=True)
-    #Really interested in what's happening with the indexing here.
 
-    #This is the full data set but it includes the Leap Day which I'm going to assume we don't want.
+    # Current read_html setup is creating duplicate dataframes for each month
+    # Below ensures we just get just one fromae for months between Jan and Oct.
+    good_frames = [frame for frame in dfs if frame.iat[0,1] in range(1,11)] 
+    full_frame = pd.concat(good_frames, ignore_index=True)
+
+    #This is the full data set but it includes the Leap Day which I assume we don't want.
     leap_ind = full_frame[((full_frame['Month'] == 2) &( full_frame['Day'] == 29))].index
-    #Welp. Hate everything about this.
     df = full_frame.drop(leap_ind)
 
-    print('Index', leap_ind)
     #Add average temp column.
+    df['Average Temp'] = (df['Maximum T'] + df['Minimum T']) / 2
 
-    #Pull Standard Deviation
-    # Add average columns
-    #print(full_frame.columns.values)
-    return HttpResponse(df.to_string())
+    return HttpResponse('''\
+        Average Daily Temp for 2021: {avg_temp}
+        Standard Deviation Average Daily Temp for 2021: {std_temp}
+        2021 Table Data
+        ===============
+        {table_data}'''.format(
+            avg_temp=str(df['Average Temp'].mean()),
+            std_temp=str(df['Average Temp'].std()),
+            table_data=df.to_string()
+        )
+    )
