@@ -5,6 +5,10 @@ It is a Django app that can be run either locally or with Docker.
 
 ## Docker Instructions
 	Install Docker, Docker-Compose, Python, Pip 
+	`docker-compose up`
+	
+	IF you add additional packages to the README you'll need to rebuild the contianer with: 
+	`docker-compose build`
 	
 ## Local Instructions
 	`pip install -r requirements.txt`
