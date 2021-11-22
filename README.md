@@ -16,7 +16,7 @@ Clone the repo and follow which ever set of instructions you're feeling:
 	`pip install -r requirements.txt`
 	`python manage.py runserver 0.0.0.0:8000`
 	
-With either set of instructions you will be able to go to `[Local Host](http://localhost:8000)` and see the `EnTemp` landing page.
+With either set of instructions you will be able to go to [Local Host](http://localhost:8000) and see the `EnTemp` landing page.
 
 ## Assessment ##
 The majority of the logic is in `entemp/views.py` as the `entemp_view` function. 
