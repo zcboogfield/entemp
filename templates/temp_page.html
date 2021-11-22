@@ -1,0 +1,30 @@
+<html>
+{% block title %}<h1>EnTemp</h1>{% endblock %}
+		<body>
+		{% block content %}
+			<h2>Temparature Data for January - October 2021</h2>
+			<p>Average Daily Temp for 2021: {{ config.avg_temp }}</p>
+			<p>Standard Deviation Average Daily Temp for 2021: {{  config.std_temp  }}</p>
+			<table id="datatable"class="table table-striped">
+                        <tr>
+                            {% for value in config.header %}
+							<th>{{ value }}</th>
+							{% endfor %}
+						</tr>
+                            {% for value in config.rows %}
+                        <tr>
+                            <td>{{ value.1.0 }}</td>
+                            <td>{{ value.1.1 }}</td>
+                            <td>{{ value.1.2 }}</td>
+                            <td>{{ value.1.3 }}</td>
+                            <td>{{ value.1.4 }}</td>
+                            <td>{{ value.1.5 }}</td>
+                            <td>{{ value.1.6 }}</td>
+                            <td>{{ value.1.7 }}</td>
+                            <td>{{ value.1.8 }}</td>
+                        </tr>
+                        {% endfor %}
+			</table>
+		{% endblock %}
+		</body>
+</html>
